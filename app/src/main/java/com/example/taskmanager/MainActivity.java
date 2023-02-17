@@ -1,30 +1,40 @@
 package com.example.taskmanager;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 
 import com.example.taskmanager.Adapter.TaskAdapter;
+import com.example.taskmanager.DailyNotification.NotificationReceiver;
 import com.example.taskmanager.Model.TaskModels;
+import com.example.taskmanager.Tasks.CreateNewTask;
+import com.example.taskmanager.Tasks.DialogCloseListener;
+import com.example.taskmanager.Tasks.RecyclerItemTouchHelper;
 import com.example.taskmanager.Utility.DatabaseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 
 // Main page functions
 
-public class MainActivity extends AppCompatActivity implements DialogCloseListener{
+public class MainActivity extends AppCompatActivity implements DialogCloseListener {
 
     private RecyclerView tasksRecyclerView;
     private TaskAdapter taskAdapter;
@@ -32,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     private List<TaskModels> taskList;
     private DatabaseHandler db;
+    Switch notificationSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +69,15 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         fab.setOnClickListener(view -> CreateNewTask.newInstance().show(getSupportFragmentManager(), CreateNewTask.TAG));
 
-    }
+//Daily Notification function
+        notificationSwitch = findViewById(R.id.notificationSwitch);
+        notificationSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b){
+                prepAlarm();
+            }
+        });
 
+    }
 
 // Function responsible for retrieving the list from the database and for sorting into correct order.
     @Override
@@ -69,4 +87,26 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         taskAdapter.setTask(taskList);
         taskAdapter.notifyDataSetChanged();
     }
+
+// Method for the daily notification function.
+// Method that create the time for and the alarm instance.
+    public void prepAlarm(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        if (calendar.getTime().compareTo(new Date()) < 0) calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 200, intent, FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if(alarmManager != null){
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
+
+    }
+
+
 }

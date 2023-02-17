@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Tasks;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskmanager.Adapter.TaskAdapter;
+import com.example.taskmanager.R;
 
 
 // Functions for editing and deleting tasks.

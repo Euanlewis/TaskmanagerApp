@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Tasks;
 
 import android.content.DialogInterface;
 

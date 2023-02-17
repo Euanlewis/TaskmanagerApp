@@ -37,5 +37,16 @@
         android:backgroundTint="@android:color/holo_blue_dark"
         android:src="@drawable/ic_baseline_plus_icon"/>
 
+    <Switch
+        android:id="@+id/notificationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:layout_marginRight="32dp"
+        android:text="Daily Reminder"/>
+
+
 
 </RelativeLayout>

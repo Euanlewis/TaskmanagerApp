@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taskmanager.CreateNewTask;
+import com.example.taskmanager.Tasks.CreateNewTask;
 import com.example.taskmanager.MainActivity;
 import com.example.taskmanager.Model.TaskModels;
 import com.example.taskmanager.R;

@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Tasks;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -15,13 +15,11 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.example.taskmanager.Model.TaskModels;
+import com.example.taskmanager.R;
 import com.example.taskmanager.Utility.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import java.util.Objects;
 
 // Function for creating a new task.
 

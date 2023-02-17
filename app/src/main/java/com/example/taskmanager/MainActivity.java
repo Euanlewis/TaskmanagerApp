@@ -11,6 +11,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     private List<TaskModels> taskList;
     private DatabaseHandler db;
+
     Switch notificationSwitch;
+    private Object SharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +74,20 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
 //Daily Notification function
         notificationSwitch = findViewById(R.id.notificationSwitch);
+
+// Shared preferences used to remember state of switch.
+        boolean value = false;
+        final SharedPreferences sharedPreferences = getSharedPreferences("b", 0);
+
+        value = sharedPreferences.getBoolean("b", value);
+        notificationSwitch.setChecked(value);
+
         notificationSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b){
+                sharedPreferences.edit().putBoolean("b", true).apply();
                 prepAlarm();
+            } else {
+                sharedPreferences.edit().putBoolean("b", false).apply();
             }
         });
 
@@ -93,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     public void prepAlarm(){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 21);
-        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MINUTE, 00);
         calendar.set(Calendar.SECOND, 0);
 
         if (calendar.getTime().compareTo(new Date()) < 0) calendar.add(Calendar.DAY_OF_MONTH, 1);

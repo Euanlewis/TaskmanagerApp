@@ -2,6 +2,8 @@ package com.example.taskmanager.Tasks;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +22,8 @@ import com.example.taskmanager.Model.TaskModels;
 import com.example.taskmanager.R;
 import com.example.taskmanager.Utility.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.ArrayList;
 
 // Function for creating a new task.
 
@@ -77,11 +81,13 @@ public class CreateNewTask extends BottomSheetDialogFragment {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                newTaskSaveButton.setEnabled(false);
+                newTaskSaveButton.setTextColor(Color.GRAY);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().equals("")){
+                if(charSequence.toString().equals(" ")){
                     newTaskSaveButton.setEnabled(false);
                     newTaskSaveButton.setTextColor(Color.GRAY);
                 }else {
@@ -105,6 +111,7 @@ public class CreateNewTask extends BottomSheetDialogFragment {
                 TaskModels task = new TaskModels();
                 task.setTask(text);
                 task.setStatus(0);
+                task.setPriorityRating(0);
                 db.insertTask(task);
             }
             dismiss();

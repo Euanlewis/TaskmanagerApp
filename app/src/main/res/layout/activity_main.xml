@@ -47,6 +47,21 @@
         android:layout_marginRight="32dp"
         android:text="Daily Reminder"/>
 
+    <Button
+        android:id="@+id/prioritizationButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="35dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="Prioritise Tasks"
+        android:textColor="@color/black"
+        android:textSize="10dp">
+
+    </Button>
+
 
 
 </RelativeLayout>

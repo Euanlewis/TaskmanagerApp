@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.taskmanager">
 
-
+// Allows for notification function
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,7 +30,7 @@
             android:name=".MainActivity"/>
 
 
-
+// Allows for notification function using broadcast
         <receiver android:name=".DailyNotification.NotificationReceiver"></receiver>
     </application>
 
